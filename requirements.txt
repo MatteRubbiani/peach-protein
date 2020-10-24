@@ -1,0 +1,11 @@
+Flask
+Flask-RESTful
+Flask-JWT
+Flask-JWT_Extended
+Flask-SQLAlchemy
+uwsgi
+datetime
+python-dotenv
+werkzeug==1.0.1
+flask_cors
+requests
