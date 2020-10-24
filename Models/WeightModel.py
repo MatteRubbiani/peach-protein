@@ -11,7 +11,7 @@ class WeightModel(db.Model):
     unit = db.Column(db.String(10))
     date = db.Column(db.Integer)
 
-    def __int__(self, exercise_id, weight, unit):
+    def __init__(self, exercise_id, weight, unit):
         self.id = None
         self.exercise_id = exercise_id
         self.weight = weight

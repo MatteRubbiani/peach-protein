@@ -12,7 +12,7 @@ class SheetModel(db.Model):
     last_performed = db.Column(db.Integer)
     creation_date = db.Column(db.Integer)
 
-    def __int__(self, workout_id, name, duration):
+    def __init__(self, workout_id, name, duration):
         self.id = None
         self.workout_id = workout_id
         self.name = name

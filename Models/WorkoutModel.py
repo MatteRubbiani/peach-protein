@@ -9,7 +9,7 @@ class WorkoutModel(db.Model):
     name = db.Column(db.String(80))
     creation_date = db.Column(db.Integer)
 
-    def __int__(self, user_id, name):
+    def __init__(self, user_id, name):
         self.id = None
         self.user_id = user_id
         self.name = name
@@ -18,6 +18,10 @@ class WorkoutModel(db.Model):
     @classmethod
     def find_by_id(cls, id):
         return WorkoutModel.query.filter_by(id=id).first()
+
+    @classmethod
+    def find_by_user_id(cls, user_id):
+        return WorkoutModel.query.filter_by(user_id=user_id)
 
     @classmethod
     def find_all(cls):

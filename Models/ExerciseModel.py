@@ -15,7 +15,7 @@ class ExerciseModel(db.Model):
     series = db.Column(db.Integer)
     creation_date = db.Column(db.Integer)
 
-    def __int__(self, sheet_id, name, description, repetitions_or_time, repetitions, duration, series):
+    def __init__(self, sheet_id, name, description, repetitions_or_time, repetitions, duration, series):
         self.id = None
         self.sheet_id = sheet_id
         self.name = name

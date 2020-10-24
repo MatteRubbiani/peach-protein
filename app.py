@@ -4,7 +4,8 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 from flask_cors import CORS
-from Resources.Users import Register
+from Resources.Users import *
+from Resources.Workout import *
 
 
 
@@ -27,7 +28,11 @@ cors = CORS(app)
 api = Api(app)
 
 # ============ resources ============= #
-api.add_resource(Register, "/")
+api.add_resource(Register, "/user/register")
+api.add_resource(GetUsername, "/user")
+api.add_resource(ChangeUsername, "/user/change-username")
+
+api.add_resource(CreateWorkout, "/workout")
 
 # ============ ### ============= #
 
