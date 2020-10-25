@@ -9,18 +9,16 @@ class ExerciseModel(db.Model):
     sheet_id = db.Column(db.Integer)
     name = db.Column(db.String(80))
     description = db.Column(db.String(256))
-    repetitions_or_time = db.Column(db.Boolean) #True=repetitions False=time
     repetitions = db.Column(db.Integer)
     duration = db.Column(db.Integer)
     series = db.Column(db.Integer)
     creation_date = db.Column(db.Integer)
 
-    def __init__(self, sheet_id, name, description, repetitions_or_time, repetitions, duration, series):
+    def __init__(self, sheet_id, name, description, repetitions, duration, series):
         self.id = None
         self.sheet_id = sheet_id
         self.name = name
         self.description = description
-        self.repetitions_or_time = repetitions_or_time
         if (repetitions or duration) and not(repetitions and duration):
             self.repetitions = repetitions
             self.duration = duration
@@ -32,6 +30,10 @@ class ExerciseModel(db.Model):
     @classmethod
     def find_by_id(cls, id):
         return ExerciseModel.query.filter_by(id=id).first()
+
+    @classmethod
+    def find_by_sheet_id(cls, sheet_id):
+        return ExerciseModel.query.filter_by(sheet_id=sheet_id)
 
     @classmethod
     def find_all(cls):
@@ -55,9 +57,6 @@ class ExerciseModel(db.Model):
 
     def change_description(self, description):
         self.description = description
-
-    def change_mod(self, mod):
-        self.repetitions_or_time = mod
 
     def change_repetitions(self, repetitions):
         self.repetitions = repetitions

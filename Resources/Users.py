@@ -2,15 +2,23 @@ from flask_restful import Resource, request
 from Models.UserModel import UserModel
 import errors
 
-class Register(Resource):
-    def post(self):
+class SetUser(Resource):
+    def post(self): #Create user if user_id is not passed or change an existing one if user_id is passed
         data = request.get_json()
-        username = data['username']
-        user = UserModel(username)
-        user.save_to_db()
+        username = data["username"]
+        try:
+            id = data["user"]
+            user = UserModel.find_by_id(id)
+            if user:
+                user.change_username(username)
+                user.save_to_db()
+            else:
+                return errors.USER_DOES_NOT_EXIST
+        except:
+            user = UserModel(username)
+            user.save_to_db()
 
-class GetUsername(Resource):
-    def get(self):
+    def get(self): #Get username
         data = request.get_json()
         id = data['user']
         user = UserModel.find_by_id(id)
@@ -18,15 +26,3 @@ class GetUsername(Resource):
             return user.username
         else:
             return errors.USER_DOES_NOT_EXIST
-
-class ChangeUsername(Resource):
-    def post(self):
-        data = request.get_json()
-        username = data['username']
-        id = data["user"]
-        user = UserModel.find_by_id(id)
-        if user:
-            user.change_username(username)
-            user.save_to_db()
-        else:
-            errors.USER_DOES_NOT_EXIST

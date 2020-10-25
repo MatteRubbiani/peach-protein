@@ -25,6 +25,10 @@ class SheetModel(db.Model):
         return SheetModel.query.filter_by(id=id).first()
 
     @classmethod
+    def find_by_workout_id(cls, workout_id):
+        return SheetModel.query.filter_by(workout_id=workout_id)
+
+    @classmethod
     def find_all(cls):
         return SheetModel.query.filter_by()
 

@@ -6,6 +6,10 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from Resources.Users import *
 from Resources.Workout import *
+from Resources.Sheet import *
+from Resources.Exercise import *
+from Resources.Weight import *
+
 
 
 
@@ -28,11 +32,16 @@ cors = CORS(app)
 api = Api(app)
 
 # ============ resources ============= #
-api.add_resource(Register, "/user/register")
-api.add_resource(GetUsername, "/user")
-api.add_resource(ChangeUsername, "/user/change-username")
+api.add_resource(SetUser, "/user")
 
-api.add_resource(CreateWorkout, "/workout")
+api.add_resource(SetWorkout, "/workout")
+
+api.add_resource(SetSheet, "/sheet")
+
+api.add_resource(SetExercise, "/exercise")
+
+api.add_resource(SetWeight, "/weight")
+api.add_resource(GetAllWeightsByWorkout, "/weight/workout")
 
 # ============ ### ============= #
 
