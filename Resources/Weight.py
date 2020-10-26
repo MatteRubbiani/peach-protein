@@ -29,6 +29,9 @@ class SetWeight(Resource):
                     "unit": w.unit,
                     "date": w.date
                 })
+            return weights
+        else:
+            return errors.SHEET_DOES_NOT_EXIST
 
 class GetAllWeightsByWorkout(Resource):
     def get(self):
