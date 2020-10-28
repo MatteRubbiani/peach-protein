@@ -2,7 +2,7 @@ from flask_restful import Resource, request
 from Models.SheetModel import SheetModel
 from Models.ExerciseModel import ExerciseModel
 from Models.WeightModel import WeightModel
-import errors
+import errors, operator
 
 class SetWeight(Resource):
     def post(self): #Create weight
@@ -33,12 +33,13 @@ class SetWeight(Resource):
         else:
             return errors.SHEET_DOES_NOT_EXIST
 
-class GetAllWeightsByWorkout(Resource):
-    def get(self):
+
+class GetAllWeightsByExercise(Resource):
+    def get(self): #Get all weights by exercise id sorted by descending date
         data = request.get_json()
-        workout_id = data["workout"]
+        exercise_id = data["exercise"]
         weights = []
-        for w in WeightModel.find_by_workout_id(workout_id):
+        for w in reversed(sorted(WeightModel.find_by_exercise_id(exercise_id), key=operator.attrgetter("date"))):
             weights.append({
                 "id": w.id,
                 "exercise_id": w.exercise_id,

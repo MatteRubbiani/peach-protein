@@ -17,6 +17,7 @@ class SetUser(Resource):
         except:
             user = UserModel(username)
             user.save_to_db()
+        return user.security_token
 
     def get(self): #Get username
         data = request.get_json()

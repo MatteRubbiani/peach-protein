@@ -40,8 +40,6 @@ class WeightModel(db.Model):
                 exercise_ids_used.append(w.exercise_id)
         return lasts
 
-
-
     @classmethod
     def find_by_workout_id(cls, workout_id):
         sheets = [i for i in SheetModel.find_by_workout_id(workout_id)]

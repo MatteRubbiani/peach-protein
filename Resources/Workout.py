@@ -42,3 +42,19 @@ class SetWorkout(Resource):
             return workouts
         else:
             return errors.USER_DOES_NOT_EXIST
+
+    def delete(self):
+        data = request.get_json()
+        workout_id = data["workout"]
+        security_token = data["security_token"]
+        workout = WorkoutModel.find_by_id(workout_id)
+        user = UserModel.find_by_id(workout.user_id)
+        if workout:
+            if user.security_token == security_token:
+                workout.delete_from_db()
+            else:
+                return errors.SECURITY_TOKEN_NOT_VALID
+        else:
+            return errors.WORKOUT_DOES_NOT_EXIST
+
+

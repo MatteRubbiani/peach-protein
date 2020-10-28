@@ -1,11 +1,12 @@
 from db import db
-import time
+import time, string, random
 
 
 class UserModel(db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
+    security_token = db.Column(db.Integer)
     username = db.Column(db.String(80))
     creation_date = db.Column(db.Integer)
 
@@ -13,6 +14,11 @@ class UserModel(db.Model):
         self.id = None
         self.username = username
         self.creation_date = int(time.time())
+        tag = self.get_random_alphanumeric_string(16)
+        while not self.security_token_is_valid(tag):
+            tag = self.get_random_alphanumeric_string(16)
+        self.security_token = tag
+
 
     @classmethod
     def find_by_id(cls, id):
@@ -45,3 +51,14 @@ class UserModel(db.Model):
 
     def change_username(self, username):
         self.username = username
+
+    def get_random_alphanumeric_string(length):
+        letters_and_digits = string.ascii_letters + string.digits
+        result_str = ''.join((random.choice(letters_and_digits) for i in range(length)))
+        return result_str
+
+    def security_token_is_valid(self, security_token):
+        for i in UserModel.find_all():
+            if i.security_token==security_token:
+                return False
+        return True

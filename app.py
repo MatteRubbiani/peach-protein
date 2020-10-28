@@ -41,7 +41,7 @@ api.add_resource(SetSheet, "/sheet")
 api.add_resource(SetExercise, "/exercise")
 
 api.add_resource(SetWeight, "/weight")
-api.add_resource(GetAllWeightsByWorkout, "/weight/workout")
+api.add_resource(GetAllWeightsByExercise, "/weight/workout")
 
 # ============ ### ============= #
 
