@@ -1,4 +1,6 @@
 from flask_restful import Resource, request
+from Models.UserModel import UserModel
+from Models.WorkoutModel import WorkoutModel
 from Models.SheetModel import SheetModel
 from Models.ExerciseModel import ExerciseModel
 import errors
@@ -67,3 +69,19 @@ class SetExercise(Resource):
             return exercises
         else:
             return errors.SHEET_DOES_NOT_EXIST
+
+    def delete(self):
+        data = request.get_json()
+        exercise_id = data["exercise"]
+        security_token = data["security_token"]
+        exercise = ExerciseModel.find_by_id(exercise_id)
+        sheet = SheetModel.find_by_id(exercise.sheet_id)
+        workout = WorkoutModel.find_by_id(sheet.workout_id)
+        user = UserModel.find_by_id(workout.user_id)
+        if exercise:
+            if user.security_token == security_token:
+                exercise.delete_from_db()
+            else:
+                return errors.SECURITY_TOKEN_NOT_VALID
+        else:
+            return errors.EXERCISE_DOES_NOT_EXIST
